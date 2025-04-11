@@ -3,6 +3,7 @@ import { getBitcoin } from '@/services/bitcoin';
 import { getCurrency } from '@/services/currency';
 import { getStocks } from '@/services/stocks';
 import { ShowVariation } from '@/components/ui/show-variations';
+import { AddToListButton } from './add-to-list-button';
 
 export async function Quotations() {
   const bitcoin = await getBitcoin();
@@ -10,7 +11,7 @@ export async function Quotations() {
   const stocks = await getStocks();
 
   return (
-    <section className='grid lg:grid-cols-3 gap-4'>
+    <section className='grid lg:grid-cols-3 gap-4 px-4 md:px-0'>
       <Card className='gap-1 border-sky-200'>
         <CardHeader className='py-0 px-3'>
           <CardTitle className='text-xl font-bold text-sky-500'>
@@ -18,24 +19,22 @@ export async function Quotations() {
           </CardTitle>
         </CardHeader>
         <CardContent className='p-1 h-[430px] overflow-y-auto'>
-          {stocks.map((stock) => (
+          {stocks.map((item) => (
             <div
-              key={stock.name}
+              key={item.name}
               className='flex justify-between items-center not-last:border-b border-input p-3'
             >
               <div>
                 <p className='text-base text-sky-800 font-semibold'>
-                  {stock.name}
+                  {item.name}
                 </p>
-                <span className='text-slate-400'>{stock.points}</span>
+                <span className='text-slate-400'>{item.points}</span>
               </div>
               <div className='grid gap-2'>
                 <div className='flex items-center justify-center gap-1 text-green-700 font-semibold'>
-                  <ShowVariation variation={stock.variation} />
+                  <ShowVariation variation={item.variation} />
                 </div>
-                <button className='text-xs text-slate-900 bg-slate-100 font-semibold uppercase p-2 px-4 rounded-sm cursor-pointer'>
-                  Salvar
-                </button>
+                <AddToListButton quotation={item}>Salvar</AddToListButton>
               </div>
             </div>
           ))}
@@ -49,14 +48,14 @@ export async function Quotations() {
           </CardTitle>
         </CardHeader>
         <CardContent className='p-1 h-[430px] overflow-y-auto'>
-          {currencies.map((stock) => (
+          {currencies.map((item) => (
             <div
-              key={stock.name}
+              key={item.name}
               className='flex justify-between items-center not-last:border-b border-input p-3'
             >
               <div className='grid gap-2'>
                 <p className='text-base text-cyan-800 font-semibold'>
-                  {stock.name}
+                  {item.name}
                 </p>
                 <div className='flex gap-2'>
                   <p className='text-slate-400'>
@@ -64,18 +63,16 @@ export async function Quotations() {
                     Venda <br />
                   </p>
                   <p className='text-slate-600 font-semibold'>
-                    {stock.buy} <br />
-                    {stock.sell}
+                    {item.buy} <br />
+                    {item.sell}
                   </p>
                 </div>
               </div>
               <div className='grid gap-2'>
                 <div className='flex items-center justify-center gap-1 text-green-700 font-semibold'>
-                  <ShowVariation variation={stock.variation} />
+                  <ShowVariation variation={item.variation} />
                 </div>
-                <button className='text-xs text-slate-900 bg-slate-100 font-semibold uppercase p-2 px-4 rounded-sm cursor-pointer'>
-                  Salvar
-                </button>
+                <AddToListButton quotation={item}>Salvar</AddToListButton>
               </div>
             </div>
           ))}
@@ -89,14 +86,14 @@ export async function Quotations() {
           </CardTitle>
         </CardHeader>
         <CardContent className='p-1 h-[430px] overflow-y-auto scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-slate-100'>
-          {bitcoin.map((stock) => (
+          {bitcoin.map((item) => (
             <div
-              key={stock.name}
+              key={item.name}
               className='flex justify-between items-center not-last:border-b border-input p-3'
             >
               <div className='grid gap-2'>
                 <p className='text-base text-violet-800 font-semibold'>
-                  {stock.name}
+                  {item.name}
                 </p>
                 <div className='flex gap-2'>
                   <p className='text-slate-400'>
@@ -104,18 +101,16 @@ export async function Quotations() {
                     Venda <br />
                   </p>
                   <p className='text-slate-600 font-semibold'>
-                    {stock.buy} <br />
-                    {stock.sell}
+                    {item.buy} <br />
+                    {item.sell}
                   </p>
                 </div>
               </div>
               <div className='grid gap-2'>
                 <div className='flex items-center justify-center gap-1 text-green-700 font-semibold'>
-                  <ShowVariation variation={stock.variation} />
+                  <ShowVariation variation={item.variation} />
                 </div>
-                <button className='text-xs text-slate-900 bg-slate-100 font-semibold uppercase p-2 px-4 rounded-sm cursor-pointer'>
-                  Salvar
-                </button>
+                <AddToListButton quotation={item}>Salvar</AddToListButton>
               </div>
             </div>
           ))}

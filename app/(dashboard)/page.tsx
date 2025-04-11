@@ -1,4 +1,3 @@
-import { MyWallet } from './components/my-wallet';
 import { HeaderFeatured } from './components/header-featured';
 import {
   Card,
@@ -12,7 +11,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Quotations } from './components/quotations';
 import { getCurrency } from '@/services/currency';
-
+import { BookMarket } from './components/bookmarket/bookmarket';
 export default async function Home() {
   const currencies = await getCurrency();
 
@@ -28,8 +27,8 @@ export default async function Home() {
         <Separator className='mt-2' />
       </header>
 
-      <section className='grid lg:grid-cols-[1fr_2fr] gap-4'>
-        <MyWallet />
+      <section className='grid lg:grid-cols-[1fr_2fr] gap-4 px-4 md:px-0'>
+        <BookMarket />
 
         <Card className='bg-gray-100 flex h-full w-full'>
           <CardHeader className='flex justify-between items-center'>
