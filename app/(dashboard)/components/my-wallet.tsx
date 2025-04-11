@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { MoveDownLeft } from 'lucide-react';
 import React from 'react';
 import { Separator } from '@/components/ui/separator';
+import { ShowVariation } from '@/components/ui/show-variations';
 
 type Stock = {
   id: string;
@@ -80,9 +81,12 @@ export async function MyWallet() {
                 </p>
                 <div className='text-right space-y-1'>
                   <p className='font-bold text-gray-800'>{stock.points}</p>
-                  <Badge className='text-red-700 bg-red-200'>
-                    <MoveDownLeft className='size-4 text-red-700' />
-                    {stock.variation}
+                  <Badge
+                    className={`${
+                      stock.variation > 0 ? 'bg-green-200' : 'bg-red-200'
+                    }`}
+                  >
+                    <ShowVariation variation={stock.variation} />
                   </Badge>
                 </div>
               </div>

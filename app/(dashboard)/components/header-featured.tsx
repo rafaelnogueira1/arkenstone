@@ -2,84 +2,15 @@
 import AutoScroll from 'embla-carousel-auto-scroll';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { MoveUpRight } from 'lucide-react';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
 } from '@/components/ui/carousel';
+import { ShowVariation } from '@/components/ui/show-variations';
+import { Currency, getCurrency } from '@/services/currency';
 
-type Currency = {
-  name: string;
-  buy: number;
-  sell: number | null;
-  variation: number;
-};
-
-const currencies: Currency[] = [
-  {
-    name: 'Dollar',
-    buy: 5.9468,
-    sell: 5.9453,
-    variation: 2.202,
-  },
-  {
-    name: 'Euro',
-    buy: 6.6598,
-    sell: 6.6578,
-    variation: 4.522,
-  },
-  {
-    name: 'Argentine Peso',
-    buy: 0.0053,
-    sell: null,
-    variation: 1.923,
-  },
-  {
-    name: 'Peso',
-    buy: 0.0053,
-    sell: null,
-    variation: 1.923,
-  },
-  {
-    name: 'Eurao',
-    buy: 0.0053,
-    sell: null,
-    variation: 1.923,
-  },
-  {
-    name: 'Ruble',
-    buy: 0.0053,
-    sell: null,
-    variation: 1.923,
-  },
-  {
-    name: 'Dolar USD',
-    buy: 0.0053,
-    sell: null,
-    variation: 1.923,
-  },
-  {
-    name: 'Moeda',
-    buy: 0.0053,
-    sell: null,
-    variation: 1.923,
-  },
-  {
-    name: 'Reac',
-    buy: 0.0053,
-    sell: null,
-    variation: 1.923,
-  },
-  {
-    name: 'Real 3',
-    buy: 0.0053,
-    sell: null,
-    variation: 1.923,
-  },
-];
-
-export function HeaderFeatured() {
+export function HeaderFeatured({ currencies }: { currencies: Currency[] }) {
   return (
     <div className='py-1 gap-2'>
       <Carousel
@@ -108,11 +39,11 @@ export function HeaderFeatured() {
                 <div className='text-primary text-xs font-bold flex justify-between items-center'>
                   <p className='text-ellipsis text-nowrap'>{currency.name}</p>
                   <Badge
-                    variant='secondary'
-                    className='text-green-700 bg-green-200 ml-6'
+                    className={`${
+                      currency.variation > 0 ? 'bg-green-200' : 'bg-red-200'
+                    }`}
                   >
-                    <MoveUpRight className='size-4 text-green-700' />
-                    {currency.variation}
+                    <ShowVariation variation={currency.variation} />
                   </Badge>
                 </div>
                 <div className='h-[32px] text-xs flex justify-between'>

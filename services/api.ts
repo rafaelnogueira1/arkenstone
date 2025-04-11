@@ -6,9 +6,3 @@ export const api = ky.create({
     key: process.env.API_KEY || '',
   },
 });
-
-export const api_finance = api.extend((options) => ({
-  prefixUrl: `${options.prefixUrl}finance`,
-}));
-
-// const response = await api_finance.get('/').json();
