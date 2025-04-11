@@ -31,16 +31,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>
-          <div className='w-full h-full mx-auto'>
-            <Header />
-            <HeaderMobile />
-            {children}
-            <footer className='bg-slate-100 py-5 px-4 mt-10'>
-              <p className='text-center text-slate-600 text-xs'>
-                &copy; {new Date().getFullYear()} - Todos os direitos reservados
-              </p>
-            </footer>
-          </div>
+          <div className='w-full h-full mx-auto'>{children}</div>
         </Providers>
       </body>
     </html>

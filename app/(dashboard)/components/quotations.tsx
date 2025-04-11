@@ -28,10 +28,10 @@ export async function Quotations() {
                 <p className='text-base text-sky-800 font-semibold'>
                   {item.name}
                 </p>
-                <span className='text-slate-400'>{item.points}</span>
+                <span className='text-slate-600'>{item.points}</span>
               </div>
               <div className='grid gap-2'>
-                <div className='flex items-center justify-center gap-1 text-green-700 font-semibold'>
+                <div className='flex items-center justify-center gap-1 font-semibold'>
                   <ShowVariation variation={item.variation} />
                 </div>
                 <AddToListButton quotation={item}>Salvar</AddToListButton>
@@ -58,7 +58,7 @@ export async function Quotations() {
                   {item.name}
                 </p>
                 <div className='flex gap-2'>
-                  <p className='text-slate-400'>
+                  <p className='text-slate-600'>
                     Compra <br />
                     Venda <br />
                   </p>
@@ -69,7 +69,7 @@ export async function Quotations() {
                 </div>
               </div>
               <div className='grid gap-2'>
-                <div className='flex items-center justify-center gap-1 text-green-700 font-semibold'>
+                <div className='flex items-center justify-center gap-1 font-semibold'>
                   <ShowVariation variation={item.variation} />
                 </div>
                 <AddToListButton quotation={item}>Salvar</AddToListButton>
@@ -96,7 +96,7 @@ export async function Quotations() {
                   {item.name}
                 </p>
                 <div className='flex gap-2'>
-                  <p className='text-slate-400'>
+                  <p className='text-slate-600'>
                     Compra <br />
                     Venda <br />
                   </p>
@@ -107,7 +107,7 @@ export async function Quotations() {
                 </div>
               </div>
               <div className='grid gap-2'>
-                <div className='flex items-center justify-center gap-1 text-green-700 font-semibold'>
+                <div className='flex items-center justify-center gap-1  font-semibold'>
                   <ShowVariation variation={item.variation} />
                 </div>
                 <AddToListButton quotation={item}>Salvar</AddToListButton>

@@ -1,9 +1,20 @@
 'use client';
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogAction,
+} from '@/components/ui/alert-dialog';
 import { createContext, ReactNode, useContext, useState } from 'react';
 
-type Quotation = {
+export type Quotation = {
   name: string;
   variation: number;
+  points?: number;
+  buy?: number;
+  sell?: number;
 };
 
 type ManageQuotationsContextType = {
@@ -18,6 +29,8 @@ const ManageQuotationsContext = createContext<ManageQuotationsContextType>(
 
 const ManageQuotationsProvider = ({ children }: { children: ReactNode }) => {
   const [myCotationsList, setMyCotationsList] = useState<Quotation[]>([]);
+  const [isOpenAlertItemAlreadyExists, setIsOpenAlertItemAlreadyExists] =
+    useState(false);
 
   const addMyCotationsList = (quotation: Quotation) => {
     const quotationExists = myCotationsList.find(
@@ -25,7 +38,7 @@ const ManageQuotationsProvider = ({ children }: { children: ReactNode }) => {
     );
 
     if (quotationExists) {
-      alert('Item já existe na lista');
+      setIsOpenAlertItemAlreadyExists(true);
     } else {
       setMyCotationsList([...myCotationsList, quotation]);
     }
@@ -41,6 +54,26 @@ const ManageQuotationsProvider = ({ children }: { children: ReactNode }) => {
     <ManageQuotationsContext.Provider
       value={{ myCotationsList, addMyCotationsList, removeMyCotationsList }}
     >
+      {isOpenAlertItemAlreadyExists && (
+        <AlertDialog
+          open={isOpenAlertItemAlreadyExists}
+          onOpenChange={setIsOpenAlertItemAlreadyExists}
+        >
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Item já existe na lista</AlertDialogTitle>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogAction
+                className='cursor-pointer'
+                onClick={() => setIsOpenAlertItemAlreadyExists(false)}
+              >
+                Fechar
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
       {children}
     </ManageQuotationsContext.Provider>
   );

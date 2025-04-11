@@ -1,17 +1,17 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { BookMarketList } from './bookmarket-list';
+import { BookMarkList } from './bookmark-list';
 
-export function BookMarket() {
+export function BookMark() {
   return (
     <div className='w-full'>
       <Card>
         <CardHeader>
-          <CardTitle className='text-2xl font-bold text-primary'>
+          <CardTitle className='text-xl font-bold text-primary'>
             Minha Lista
           </CardTitle>
         </CardHeader>
-        <CardContent className='grid gap-3 max-h-[400px] overflow-y-auto'>
-          <BookMarketList />
+        <CardContent className='flex flex-col gap-3 h-[400px] overflow-y-auto'>
+          <BookMarkList />
         </CardContent>
       </Card>
     </div>
