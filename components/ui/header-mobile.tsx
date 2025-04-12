@@ -1,12 +1,5 @@
-import { Menu, User } from 'lucide-react';
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from './sheet';
+import { Menu } from 'lucide-react';
+import { Sheet, SheetContent, SheetTrigger } from './sheet';
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -16,6 +9,8 @@ import {
 import { navigation_items } from '@/shared/utils/main-navigation-items';
 import Link from 'next/link';
 import { Separator } from './separator';
+import { ButtonLogout } from './button-logout.';
+import { UserProfile } from './user-profile';
 
 export function HeaderMobile() {
   return (
@@ -50,20 +45,10 @@ export function HeaderMobile() {
 
             <Separator />
 
-            <div className='flex gap-4 justify-between items-center px-4'>
-              <div className='flex gap-2 items-center'>
-                <User className='size-8 text-slate-500' />
-                <div className='grid gap-1'>
-                  <span className='text-sm font-bold'>Rafael N.</span>
-                  <span className='text-xs text-gray-500'>
-                    rafael@arkenstone.com
-                  </span>
-                </div>
-              </div>
+            <div className='flex gap-4 justify-between items-center px-6'>
+              <UserProfile />
               <Separator orientation='vertical' className='h-full' />
-              <button className='text-sm text-slate-500 font-semibold uppercase h-[70px] px-4 rounded-sm cursor-pointer'>
-                Sair
-              </button>
+              <ButtonLogout>Sair</ButtonLogout>
             </div>
           </div>
         </SheetContent>

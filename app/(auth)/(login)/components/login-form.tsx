@@ -1,61 +1,56 @@
+'use client';
+
+import { useActionState } from 'react';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-
+import { ButtonLogin } from './button-login';
+import { login } from '../actions';
+import { ErrorMessage } from '@/components/ui/error-message';
 export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<'div'>) {
+  const [state, formAction] = useActionState(login, undefined);
+
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
       <Card>
         <CardHeader className='text-center'>
-          <CardTitle className='text-xl'>Welcome back</CardTitle>
-          <CardDescription>
-            Login with your Apple or Google account
-          </CardDescription>
+          <CardTitle className='text-xl'>Bem-vindo de volta</CardTitle>
         </CardHeader>
         <CardContent>
-          <form>
+          <form action={formAction}>
             <div className='grid gap-6'>
               <div className='grid gap-6'>
                 <div className='grid gap-2'>
                   <Label htmlFor='email'>Email</Label>
                   <Input
                     id='email'
+                    name='email'
                     type='email'
                     placeholder='m@example.com'
-                    required
                   />
+                  {state?.errors?.email && (
+                    <ErrorMessage>{state.errors.email}</ErrorMessage>
+                  )}
                 </div>
                 <div className='grid gap-2'>
                   <div className='flex items-center'>
-                    <Label htmlFor='password'>Password</Label>
-                    <a
-                      href='#'
-                      className='ml-auto text-sm underline-offset-4 hover:underline'
-                    >
-                      Forgot your password?
-                    </a>
+                    <Label htmlFor='password'>Senha</Label>
                   </div>
-                  <Input id='password' type='password' required />
+                  <Input id='password' name='password' type='password' />
+                  {state?.errors?.password && (
+                    <ErrorMessage>{state.errors.password}</ErrorMessage>
+                  )}
                 </div>
-                <Button type='submit' className='w-full'>
-                  Login
-                </Button>
+                <ButtonLogin>Login</ButtonLogin>
               </div>
               <div className='text-center text-sm'>
-                Don&apos;t have an account?{' '}
-                <a href='#' className='underline underline-offset-4'>
-                  Sign up
+                Não tem uma conta?{' '}
+                <a href='/register' className='underline underline-offset-4'>
+                  Criar conta
                 </a>
               </div>
             </div>

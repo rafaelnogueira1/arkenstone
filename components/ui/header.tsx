@@ -1,16 +1,15 @@
 import { navigation_items } from '@/shared/utils/main-navigation-items';
-import { User } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
 import { Separator } from './separator';
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
 } from './navigation-menu';
+import { ButtonLogout } from './button-logout.';
+import { UserProfile } from './user-profile';
 
 export function Header() {
   return (
@@ -35,17 +34,10 @@ export function Header() {
           ))}
         </NavigationMenuList>
       </NavigationMenu>
-      <div className='flex gap-4 items-center ml-auto'>
-        <div className='flex gap-2 items-center'>
-          <User className='size-8 text-slate-500' />
-          <div className='grid gap-1'>
-            <span className='text-sm font-bold'>Rafael N.</span>
-            <span className='text-xs text-gray-500'>rafael@arkenstone.com</span>
-          </div>
-        </div>
-        <button className='text-sm text-slate-500 font-semibold uppercase border-l border-input h-[70px] px-10 rounded-sm cursor-pointer'>
-          Sair
-        </button>
+      <div className='flex gap-6 items-center ml-auto pr-6 h-[70px]'>
+        <UserProfile />
+        <Separator orientation='vertical' className='h-full' />
+        <ButtonLogout>Sair</ButtonLogout>
       </div>
     </header>
   );
