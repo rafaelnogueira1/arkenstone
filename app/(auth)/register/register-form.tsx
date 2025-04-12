@@ -1,6 +1,4 @@
 'use client';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -10,10 +8,10 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { register } from '../actions';
+import { register } from './actions';
 import { useActionState } from 'react';
-import { ButtonRegister } from './button-register';
 import { ErrorMessage } from '@/components/ui/error-message';
+import { ButtonSaveData } from '@/components/ui/button-save-data';
 
 export function RegisterForm({
   className,
@@ -22,7 +20,7 @@ export function RegisterForm({
   const [state, formAction] = useActionState(register, null);
 
   return (
-    <div className={cn('flex flex-col gap-6', className)} {...props}>
+    <div className='flex flex-col gap-6'>
       <Card>
         <CardHeader className='text-center'>
           <CardTitle className='text-xl'>Crie uma conta</CardTitle>
@@ -68,7 +66,7 @@ export function RegisterForm({
                     <ErrorMessage>{state.errors.password}</ErrorMessage>
                   )}
                 </div>
-                <ButtonRegister>Criar conta</ButtonRegister>
+                <ButtonSaveData>Criar conta</ButtonSaveData>
               </div>
               <div className='text-center text-sm'>
                 Já tem uma conta?{' '}

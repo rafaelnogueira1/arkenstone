@@ -1,14 +1,10 @@
 export const navigation_items = [
   {
     label: 'Home',
-    href: '/',
-  },
-  {
-    label: 'Noticias',
-    href: '/noticias',
+    href: '/dashboard',
   },
   {
     label: 'Meus Dados',
-    href: '/meus-dados',
+    href: '/profile',
   },
 ];

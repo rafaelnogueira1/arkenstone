@@ -16,7 +16,7 @@ export default async function Home() {
   const currencies = await getCurrency();
 
   return (
-    <main className='w-full max-w-[1400px] mx-auto flex flex-col gap-8 p-1 px-4'>
+    <>
       <HeaderFeatured currencies={currencies} />
       <header>
         <h2 className='text-4xl font-bold text-primary flex items-center gap-2'>
@@ -51,6 +51,6 @@ export default async function Home() {
       </section>
 
       <Quotations />
-    </main>
+    </>
   );
 }

@@ -1,6 +1,11 @@
 import { cookies } from 'next/headers';
 
-export async function getUserProfile() {
+export type UserProfile = {
+  name: string;
+  email: string;
+};
+
+export async function getUserProfile(): Promise<UserProfile | null> {
   const cookieStore = await cookies();
   const user = cookieStore.get('user');
 
