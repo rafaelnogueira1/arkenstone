@@ -1,18 +1,11 @@
 import { HeaderFeatured } from './components/header-featured';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { ChartNoAxesCombined, MoveDownLeft } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
+import { ChartNoAxesCombined } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { Quotations } from './components/quotations';
-import { getCurrency } from '@/services/currency';
+import { getCurrency } from '@/http/services/currency';
 import { BookMark } from './components/bookmark/bookmark';
 import { Chart } from './components/chart/chart';
+
 export default async function Home() {
   const currencies = await getCurrency();
 

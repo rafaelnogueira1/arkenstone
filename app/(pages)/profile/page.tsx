@@ -1,11 +1,14 @@
 import { UserCheck } from 'lucide-react';
 import { ProfileForm } from './profile-form';
 import { Separator } from '@/components/ui/separator';
-import { getUserProfile } from '@/services/actions/user-profile';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Meus Dados - Arkstone',
+  description: 'Meus Dados for Arkstone',
+};
 
 export default async function ProfilePage() {
-  const user = await getUserProfile();
-
   return (
     <div className='grid gap-8 mt-10'>
       <header>
@@ -18,7 +21,7 @@ export default async function ProfilePage() {
       </header>
 
       <section className='grid lg:grid-cols-[1fr_2fr] gap-4 mt-4 px-4 md:px-0'>
-        <ProfileForm user={user} />
+        <ProfileForm />
       </section>
     </div>
   );

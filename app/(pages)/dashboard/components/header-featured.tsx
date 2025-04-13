@@ -7,8 +7,8 @@ import {
   CarouselContent,
   CarouselItem,
 } from '@/components/ui/carousel';
+import { Currency } from '@/http/services/currency';
 import { ShowVariation } from '@/components/ui/show-variations';
-import { Currency } from '@/services/currency';
 
 export function HeaderFeatured({ currencies }: { currencies: Currency[] }) {
   return (

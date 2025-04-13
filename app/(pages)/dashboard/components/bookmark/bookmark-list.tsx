@@ -14,18 +14,29 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { ShowVariation } from '@/components/ui/show-variations';
-import { useManageQuotations } from '@/providers/manage-quotations-provider';
+import { Loader2 } from 'lucide-react';
 import { Fragment, useState } from 'react';
+import { useBookmark } from './useBookmark';
+import { useManageQuotations } from '@/providers/manage-quotations-provider';
 
 export function BookMarkList() {
-  const { myCotationsList, removeMyCotationsList, handleShowDataOnChart } =
-    useManageQuotations();
+  const { myCotationsList, removeCotationsFromBookmarks, isLoading } =
+    useBookmark();
+
+  const { showQuotationOnChart } = useManageQuotations();
+
   const [isOpenAlertConfirmation, setIsOpenAlertConfirmation] = useState(false);
 
   return (
     <>
-      {myCotationsList.length === 0 && (
-        <div className='text-lg text-slate-700 bg-slate-50 p-4 rounded-md'>
+      {isLoading && (
+        <div className='w-full h-full flex justify-center items-center'>
+          <Loader2 className='h-10 w-10 animate-spin text-slate-400' />
+        </div>
+      )}
+
+      {!isLoading && myCotationsList.length === 0 && (
+        <div className='w-full h-full flex justify-center items-center text-lg text-slate-700 bg-slate-50 p-4 rounded-md'>
           Adicione uma cotação a sua lista!
         </div>
       )}
@@ -60,7 +71,7 @@ export function BookMarkList() {
 
               <div className='flex flex-col gap-3 items-end'>
                 <button
-                  onClick={() => handleShowDataOnChart(quotation)}
+                  onClick={() => showQuotationOnChart(quotation)}
                   className='text-xs text-slate-900 bg-slate-50 font-semibold uppercase p-2 px-4 rounded-sm cursor-pointer'
                 >
                   Ver gráfico
@@ -96,7 +107,7 @@ export function BookMarkList() {
                     Cancelar
                   </AlertDialogCancel>
                   <AlertDialogAction
-                    onClick={() => removeMyCotationsList(quotation)}
+                    onClick={() => removeCotationsFromBookmarks(quotation)}
                     className='bg-red-500 hover:bg-red-600 cursor-pointer'
                   >
                     Remover

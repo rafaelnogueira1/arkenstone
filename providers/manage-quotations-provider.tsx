@@ -7,15 +7,22 @@ import {
   AlertDialogTitle,
   AlertDialogAction,
 } from '@/components/ui/alert-dialog';
-import { createContext, ReactNode, useContext, useState } from 'react';
-
-export type Quotation = {
-  name: string;
-  variation: number;
-  points?: number;
-  buy?: number;
-  sell?: number;
-};
+import {
+  addBookmark,
+  create,
+  findById,
+  getBookmarks,
+  removeBookmark,
+} from '@/repository/bookmark';
+import { Quotation } from '@/repository/bookmark';
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import { useAuth } from './auth';
 
 export type QuotationWithChartData = Quotation & {
   data: {
@@ -26,10 +33,11 @@ export type QuotationWithChartData = Quotation & {
 
 type ManageQuotationsContextType = {
   myCotationsList: Quotation[];
-  addMyCotationsList: (quotation: Quotation) => void;
-  removeMyCotationsList: (quotation: Quotation) => void;
+  setMyCotationsList: (quotation: Quotation[]) => void;
+  addCotationToBookmarks: (quotation: Quotation) => void;
   openCotationChart: QuotationWithChartData | null;
-  handleShowDataOnChart: (quotation: Quotation) => void;
+  setOpenCotationChart: (quotation: QuotationWithChartData | null) => void;
+  showQuotationOnChart: (quotation: Quotation) => void;
 };
 
 const ManageQuotationsContext = createContext<ManageQuotationsContextType>(
@@ -42,26 +50,27 @@ const ManageQuotationsProvider = ({ children }: { children: ReactNode }) => {
     useState(false);
   const [openCotationChart, setOpenCotationChart] =
     useState<QuotationWithChartData | null>(null);
+  const { user } = useAuth();
 
-  const addMyCotationsList = (quotation: Quotation) => {
-    const quotationExists = myCotationsList.find(
-      (item) => item.name === quotation.name
-    );
+  const addCotationToBookmarks = (quotation: Quotation) => {
+    if (!user?.id) return;
 
-    if (quotationExists) {
-      setIsOpenAlertItemAlreadyExists(true);
-    } else {
+    try {
+      const bookmarks = findById(user.id);
+
+      if (!bookmarks) {
+        create(user.id);
+      }
+
+      addBookmark(user.id, quotation);
+
       setMyCotationsList([...myCotationsList, quotation]);
+    } catch (error) {
+      setIsOpenAlertItemAlreadyExists(true);
     }
   };
 
-  const removeMyCotationsList = (quotation: Quotation) => {
-    setMyCotationsList(
-      myCotationsList.filter((item) => item.name !== quotation.name)
-    );
-  };
-
-  const handleShowDataOnChart = (quotation: Quotation) => {
+  const showQuotationOnChart = (quotation: Quotation) => {
     const data = [
       {
         month: '08/04',
@@ -81,17 +90,23 @@ const ManageQuotationsProvider = ({ children }: { children: ReactNode }) => {
       },
     ];
 
+    localStorage.setItem(
+      `cotationChart-${user?.id}`,
+      JSON.stringify(Object.assign(quotation, { data }))
+    );
+
     setOpenCotationChart(Object.assign(quotation, { data }));
   };
 
   return (
     <ManageQuotationsContext.Provider
       value={{
+        addCotationToBookmarks,
         myCotationsList,
-        addMyCotationsList,
-        removeMyCotationsList,
+        setMyCotationsList,
         openCotationChart,
-        handleShowDataOnChart,
+        setOpenCotationChart,
+        showQuotationOnChart,
       }}
     >
       {isOpenAlertItemAlreadyExists && (

@@ -1,5 +1,5 @@
 import { formatCurrency } from '@/shared/utils/format-currency';
-import { api } from './api';
+import { api } from '../api/api';
 
 export type Currency = {
   name: string;

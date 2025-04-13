@@ -1,11 +1,12 @@
 'use server';
 
-import { getUserProfile, UserProfile } from '@/services/actions/user-profile';
+import { getUserProfile } from '@/http/actions/user-profile';
+import { User } from '@/http/user';
 import { updateProfileSchema } from '@/shared/schema/update-profile';
 import { cookies } from 'next/headers';
 
 export type UpdateUserProfile =
-  | UserProfile
+  | User
   | { errors: { name?: string[] | string; email?: string[] | string } };
 
 export async function updateUserProfile(

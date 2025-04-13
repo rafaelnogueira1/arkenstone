@@ -7,11 +7,11 @@ type AddToListButtonProps = {
 };
 
 export function AddToListButton({ children, quotation }: AddToListButtonProps) {
-  const { addMyCotationsList } = useManageQuotations();
+  const { addCotationToBookmarks } = useManageQuotations();
 
   return (
     <button
-      onClick={() => addMyCotationsList(quotation)}
+      onClick={() => addCotationToBookmarks(quotation)}
       className='text-xs text-slate-900 bg-slate-100 font-semibold uppercase p-2 px-4 rounded-sm cursor-pointer'
     >
       {children}

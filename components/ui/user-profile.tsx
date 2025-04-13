@@ -1,7 +1,10 @@
+'use client';
+
+import { useAuth } from '@/providers/auth';
 import { User } from 'lucide-react';
-import { getUserProfile } from '@/services/actions/user-profile';
-export async function UserProfile() {
-  const user = await getUserProfile();
+
+export function UserProfile() {
+  const { user } = useAuth();
 
   return (
     <div className='flex gap-2 items-center'>

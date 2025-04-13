@@ -7,17 +7,39 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { register } from './actions';
-import { useActionState } from 'react';
-import { ErrorMessage } from '@/components/ui/error-message';
 import { ButtonSaveData } from '@/components/ui/button-save-data';
+import { redirect } from 'next/navigation';
+import { registerSchema } from '@/shared/schema/register';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { z } from 'zod';
+import { registerUser } from '@/http/user';
 
-export function RegisterForm({
-  className,
-  ...props
-}: React.ComponentPropsWithoutRef<'div'>) {
-  const [state, formAction] = useActionState(register, null);
+export function RegisterForm() {
+  const form = useForm<z.infer<typeof registerSchema>>({
+    defaultValues: {
+      name: '',
+      email: '',
+      password: '',
+    },
+    resolver: zodResolver(registerSchema),
+  });
+
+  const handleSubmit = (values: z.infer<typeof registerSchema>) => {
+    const response = registerUser(values);
+
+    if (response?.success) {
+      redirect('/');
+    }
+  };
 
   return (
     <div className='flex flex-col gap-6'>
@@ -27,55 +49,78 @@ export function RegisterForm({
           <CardDescription>Crie uma conta para começar</CardDescription>
         </CardHeader>
         <CardContent>
-          <form action={formAction}>
-            <div className='grid gap-6'>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(handleSubmit)}>
               <div className='grid gap-6'>
-                <div className='grid gap-2'>
-                  <Label htmlFor='name'>Nome</Label>
-                  <Input
-                    id='name'
-                    name='name'
-                    type='text'
-                    placeholder='Seu nome'
-                  />
-                  {state?.errors?.name && (
-                    <ErrorMessage>{state.errors.name}</ErrorMessage>
-                  )}
+                <div className='grid gap-6'>
+                  <div className='grid gap-2'>
+                    <FormField
+                      control={form.control}
+                      name='name'
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Nome</FormLabel>
+                          <FormControl>
+                            <Input
+                              type='text'
+                              placeholder='Seu nome'
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className='grid gap-2'>
+                    <FormField
+                      control={form.control}
+                      name='email'
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Email</FormLabel>
+                          <FormControl>
+                            <Input
+                              type='email'
+                              placeholder='Seu melhor email'
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className='grid gap-2'>
+                    <FormField
+                      control={form.control}
+                      name='password'
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Senha</FormLabel>
+                          <FormControl>
+                            <Input
+                              type='password'
+                              placeholder='Sua senha'
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <ButtonSaveData>Criar conta</ButtonSaveData>
                 </div>
-                <div className='grid gap-2'>
-                  <Label htmlFor='email'>Email</Label>
-                  <Input
-                    id='email'
-                    name='email'
-                    type='email'
-                    placeholder='Seu melhor email'
-                  />
-                  {state?.errors?.email && (
-                    <ErrorMessage>{state.errors.email}</ErrorMessage>
-                  )}
+                <div className='text-center text-sm'>
+                  Já tem uma conta?{' '}
+                  <a href='/' className='underline underline-offset-4'>
+                    Faça login
+                  </a>
                 </div>
-                <div className='grid gap-2'>
-                  <Label htmlFor='password'>Senha</Label>
-                  <Input
-                    id='password'
-                    name='password'
-                    type='password'
-                    placeholder='Sua senha'
-                  />
-                  {state?.errors?.password && (
-                    <ErrorMessage>{state.errors.password}</ErrorMessage>
-                  )}
-                </div>
-                <ButtonSaveData>Criar conta</ButtonSaveData>
               </div>
-              <div className='text-center text-sm'>
-                Já tem uma conta?{' '}
-                <a href='/' className='underline underline-offset-4'>
-                  Faça login
-                </a>
-              </div>
-            </div>
-          </form>
+            </form>
+          </Form>
         </CardContent>
       </Card>
     </div>

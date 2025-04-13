@@ -1,17 +1,45 @@
 'use client';
 
-import { useActionState } from 'react';
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { login } from './actions';
-import { ErrorMessage } from '@/components/ui/error-message';
 import { ButtonSaveData } from '@/components/ui/button-save-data';
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentPropsWithoutRef<'div'>) {
-  const [state, formAction] = useActionState(login, undefined);
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { loginSchema } from '@/shared/schema/login';
+import { z } from 'zod';
+import { FeedbackMessage } from '@/components/ui/feedback-message';
+import { loginUser } from '@/http/login';
+import { useAuth } from '@/providers/auth';
+export function LoginForm() {
+  const [loginMessageError, setLoginMessageError] = useState('');
+  const { setUser } = useAuth();
+
+  const form = useForm<z.infer<typeof loginSchema>>({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+    resolver: zodResolver(loginSchema),
+  });
+
+  const handleSubmit = (values: z.infer<typeof loginSchema>) => {
+    const response = loginUser(values);
+
+    if (response?.message) {
+      setLoginMessageError(response.message);
+    }
+
+    setUser(response?.user);
+  };
 
   return (
     <div className='flex flex-col gap-6'>
@@ -20,40 +48,64 @@ export function LoginForm({
           <CardTitle className='text-xl'>Bem-vindo de volta</CardTitle>
         </CardHeader>
         <CardContent>
-          <form action={formAction}>
-            <div className='grid gap-6'>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(handleSubmit)}>
               <div className='grid gap-6'>
-                <div className='grid gap-2'>
-                  <Label htmlFor='email'>Email</Label>
-                  <Input
-                    id='email'
-                    name='email'
-                    type='email'
-                    placeholder='m@example.com'
-                  />
-                  {state?.errors?.email && (
-                    <ErrorMessage>{state.errors.email}</ErrorMessage>
-                  )}
-                </div>
-                <div className='grid gap-2'>
-                  <div className='flex items-center'>
-                    <Label htmlFor='password'>Senha</Label>
+                <div className='grid gap-6'>
+                  <div className='grid gap-2'>
+                    <FormField
+                      control={form.control}
+                      name='email'
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Email</FormLabel>
+                          <FormControl>
+                            <Input
+                              type='email'
+                              placeholder='Seu email'
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
                   </div>
-                  <Input id='password' name='password' type='password' />
-                  {state?.errors?.password && (
-                    <ErrorMessage>{state.errors.password}</ErrorMessage>
-                  )}
+                  <div className='grid gap-2'>
+                    <FormField
+                      control={form.control}
+                      name='password'
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Senha</FormLabel>
+                          <FormControl>
+                            <Input
+                              type='password'
+                              placeholder='Sua senha'
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <ButtonSaveData>Login</ButtonSaveData>
                 </div>
-                <ButtonSaveData>Login</ButtonSaveData>
+                {loginMessageError && (
+                  <FeedbackMessage type='error'>
+                    {loginMessageError}
+                  </FeedbackMessage>
+                )}
+                <div className='text-center text-sm'>
+                  Não tem uma conta?{' '}
+                  <a href='/register' className='underline underline-offset-4'>
+                    Criar conta
+                  </a>
+                </div>
               </div>
-              <div className='text-center text-sm'>
-                Não tem uma conta?{' '}
-                <a href='/register' className='underline underline-offset-4'>
-                  Criar conta
-                </a>
-              </div>
-            </div>
-          </form>
+            </form>
+          </Form>
         </CardContent>
       </Card>
     </div>

@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { getBitcoin } from '@/services/bitcoin';
-import { getCurrency } from '@/services/currency';
-import { getStocks } from '@/services/stocks';
+import { getBitcoin } from '@/http/services/bitcoin';
+import { getCurrency } from '@/http/services/currency';
+import { getStocks } from '@/http/services/stocks';
 import { ShowVariation } from '@/components/ui/show-variations';
 import { AddToListButton } from './add-to-list-button';
 
