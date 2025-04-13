@@ -34,9 +34,7 @@ export const repositoryUsers = {
   findById: (id: string) => {
     const users = localStorage.getItem('users');
 
-    if (!users) {
-      throw new Error('Usuário não encontrado');
-    }
+    if (!users) return null;
 
     const usersArray = JSON.parse(users);
     return usersArray.find((user: User) => user.id === id);
@@ -45,9 +43,7 @@ export const repositoryUsers = {
   findByEmail: (email: string) => {
     const users = localStorage.getItem('users');
 
-    if (!users) {
-      throw new Error('Usuário não encontrado');
-    }
+    if (!users) return null;
 
     const usersArray = JSON.parse(users);
     return usersArray.find((user: User) => user.email === email);

@@ -16,6 +16,7 @@ import { ShowVariation } from '@/components/ui/show-variations';
 import useChart from './useChart';
 import { Loader2 } from 'lucide-react';
 import { useManageQuotations } from '@/providers/manage-quotations-provider';
+import { Button } from '@/components/ui/button';
 
 const chartConfig = {
   value: {
@@ -26,7 +27,7 @@ const chartConfig = {
 
 export function Chart() {
   const { openCotationChart } = useManageQuotations();
-  const { isLoading } = useChart();
+  const { isLoading, removeCotationFromChart } = useChart();
 
   return (
     <Card className='bg-slate-50 flex h-[508px] w-full'>
@@ -74,13 +75,15 @@ export function Chart() {
                   tickLine={false}
                   tickMargin={10}
                   axisLine={false}
-                  // tickFormatter={(value) => value.slice(0, 3)}
                 />
                 <ChartTooltip content={<ChartTooltipContent />} />
                 <ChartLegend content={<ChartLegendContent />} />
                 <Bar dataKey='value' fill='var(--color-value)' radius={4} />
               </BarChart>
             </ChartContainer>
+            <Button onClick={removeCotationFromChart} variant='ghost'>
+              Remover
+            </Button>
           </CardContent>
         </>
       )}

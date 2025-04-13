@@ -23,6 +23,8 @@ import {
 import { z } from 'zod';
 import { registerUser } from '@/http/user';
 import Link from 'next/link';
+import { FeedbackMessage } from '@/components/ui/feedback-message';
+import { useState } from 'react';
 
 export function RegisterForm() {
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -33,6 +35,10 @@ export function RegisterForm() {
     },
     resolver: zodResolver(registerSchema),
   });
+  const [feedback, setFeedback] = useState<{
+    message: string;
+    type: 'success' | 'error';
+  } | null>(null);
 
   const handleSubmit = (values: z.infer<typeof registerSchema>) => {
     const response = registerUser(values);
@@ -40,6 +46,11 @@ export function RegisterForm() {
     if (response?.success) {
       redirect('/');
     }
+
+    setFeedback({
+      message: response?.message,
+      type: 'error',
+    });
   };
 
   return (
@@ -119,6 +130,11 @@ export function RegisterForm() {
                     Faça login
                   </Link>
                 </div>
+                {feedback && (
+                  <FeedbackMessage type={feedback.type}>
+                    {feedback.message}
+                  </FeedbackMessage>
+                )}
               </div>
             </form>
           </Form>

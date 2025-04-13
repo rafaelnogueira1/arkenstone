@@ -18,6 +18,6 @@ export const loginUser = (values: User) => {
 
     return { success: true, user };
   } catch (error) {
-    return { success: false, message: 'Erro ao fazer login' };
+    return { success: false, message: (error as Error).message };
   }
 };

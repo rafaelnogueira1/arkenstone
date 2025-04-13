@@ -41,12 +41,4 @@ export const repositoryBookmarks = {
       JSON.stringify(bookmarks.filter((item) => item.name !== name))
     );
   },
-
-  // findByName: (name: string) => {
-  //   const bookmarks = repositoryBookmarks.findById(id);
-
-  //   if (!bookmarks) return null;
-
-  //   return bookmarks;
-  // },
 };

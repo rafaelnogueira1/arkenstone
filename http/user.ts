@@ -14,14 +14,18 @@ const register = (user: Omit<User, 'id'>) => {
     throw new Error('Usuário já cadastrado');
   }
 
-  const newUser = {
-    id: crypto.randomUUID(),
-    name: user.name,
-    email: user.email,
-    password: user.password,
-  };
+  try {
+    const newUser = {
+      id: crypto.randomUUID(),
+      name: user.name,
+      email: user.email,
+      password: user.password,
+    };
 
-  repositoryUsers.create(newUser);
+    repositoryUsers.create(newUser);
+  } catch (error) {
+    return { success: false, message: (error as Error).message };
+  }
 };
 
 export const registerUser = (user: Omit<User, 'id'>) => {
@@ -29,7 +33,7 @@ export const registerUser = (user: Omit<User, 'id'>) => {
     register(user);
     return { success: true, message: 'Usuário criado com sucesso' };
   } catch (error) {
-    return { success: false, message: 'Erro ao criar usuário' };
+    return { success: false, message: (error as Error).message };
   }
 };
 
@@ -37,7 +41,7 @@ export const getUserById = async (id: string) => {
   try {
     return repositoryUsers.findById(id);
   } catch (error) {
-    return { success: false, message: 'Erro ao buscar usuário' };
+    return { success: false, message: (error as Error).message };
   }
 };
 
@@ -46,6 +50,6 @@ export const updateUser = (user: User) => {
     repositoryUsers.update(user);
     return { success: true, message: 'Usuário atualizado com sucesso' };
   } catch (error) {
-    return { success: false, message: 'Erro ao atualizar usuário' };
+    return { success: false, message: (error as Error).message };
   }
 };
