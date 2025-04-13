@@ -1,9 +1,10 @@
 'use client';
 import { useManageQuotations } from '@/providers/manage-quotations-provider';
+import { Quotation } from '@/repository/bookmark';
 
 type AddToListButtonProps = {
   children: React.ReactNode;
-  quotation: any;
+  quotation: Quotation;
 };
 
 export function AddToListButton({ children, quotation }: AddToListButtonProps) {

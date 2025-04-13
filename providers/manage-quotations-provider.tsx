@@ -7,22 +7,13 @@ import {
   AlertDialogTitle,
   AlertDialogAction,
 } from '@/components/ui/alert-dialog';
-import {
-  addBookmark,
-  create,
-  findById,
-  getBookmarks,
-  removeBookmark,
-} from '@/repository/bookmark';
 import { Quotation } from '@/repository/bookmark';
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { createContext, ReactNode, useContext, useState } from 'react';
 import { useAuth } from './auth';
+import {
+  addNewCotationToBookmark,
+  getCotationOnBookmark,
+} from '@/http/bookmark';
 
 export type QuotationWithChartData = Quotation & {
   data: {
@@ -55,19 +46,18 @@ const ManageQuotationsProvider = ({ children }: { children: ReactNode }) => {
   const addCotationToBookmarks = (quotation: Quotation) => {
     if (!user?.id) return;
 
-    try {
-      const bookmarks = findById(user.id);
+    const { success } = getCotationOnBookmark({
+      id: user?.id,
+      name: quotation.name,
+    });
 
-      if (!bookmarks) {
-        create(user.id);
-      }
-
-      addBookmark(user.id, quotation);
-
-      setMyCotationsList([...myCotationsList, quotation]);
-    } catch (error) {
+    if (success) {
       setIsOpenAlertItemAlreadyExists(true);
+      return;
     }
+
+    addNewCotationToBookmark({ id: user?.id, quotation });
+    setMyCotationsList([...myCotationsList, quotation]);
   };
 
   const showQuotationOnChart = (quotation: Quotation) => {

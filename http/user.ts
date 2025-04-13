@@ -1,5 +1,4 @@
-import { create, findById, update } from '@/repository/user';
-import { findByEmail } from '@/repository/user';
+import { repositoryUsers } from '@/repository/user';
 
 export type User = {
   id: string;
@@ -9,7 +8,7 @@ export type User = {
 };
 
 const register = (user: Omit<User, 'id'>) => {
-  const userAlreadyExists = findByEmail(user.email);
+  const userAlreadyExists = repositoryUsers.findByEmail(user.email);
 
   if (userAlreadyExists) {
     throw new Error('Usuário já cadastrado');
@@ -22,7 +21,7 @@ const register = (user: Omit<User, 'id'>) => {
     password: user.password,
   };
 
-  create(newUser);
+  repositoryUsers.create(newUser);
 };
 
 export const registerUser = (user: Omit<User, 'id'>) => {
@@ -36,7 +35,7 @@ export const registerUser = (user: Omit<User, 'id'>) => {
 
 export const getUserById = async (id: string) => {
   try {
-    return findById(id);
+    return repositoryUsers.findById(id);
   } catch (error) {
     return { success: false, message: 'Erro ao buscar usuário' };
   }
@@ -44,7 +43,7 @@ export const getUserById = async (id: string) => {
 
 export const updateUser = (user: User) => {
   try {
-    update(user);
+    repositoryUsers.update(user);
     return { success: true, message: 'Usuário atualizado com sucesso' };
   } catch (error) {
     return { success: false, message: 'Erro ao atualizar usuário' };

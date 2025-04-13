@@ -2,7 +2,7 @@ import { HeaderFeatured } from './components/header-featured';
 import { ChartNoAxesCombined } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { Quotations } from './components/quotations';
-import { getCurrency } from '@/http/services/currency';
+import { getCurrency } from '@/http/currency';
 import { BookMark } from './components/bookmark/bookmark';
 import { Chart } from './components/chart/chart';
 

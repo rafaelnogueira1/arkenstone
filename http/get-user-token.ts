@@ -1,6 +1,9 @@
 'use server';
-import { getSession } from '@/lib/session';
+import { decrypt } from '@/lib/session';
+import { cookies } from 'next/headers';
 
 export async function getUserToken() {
-  return getSession();
+  const cookieStore = await cookies();
+  const session = cookieStore.get('session')?.value;
+  return await decrypt(session);
 }

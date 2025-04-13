@@ -27,12 +27,6 @@ export async function deleteSession() {
   cookieStore.delete('session');
 }
 
-export async function getSession() {
-  const cookieStore = await cookies();
-  const session = cookieStore.get('session')?.value;
-  return await decrypt(session);
-}
-
 export async function encrypt(payload: SessionPayload) {
   return new SignJWT(payload)
     .setProtectedHeader({ alg: 'HS256' })
@@ -48,6 +42,6 @@ export async function decrypt(session: string | undefined = '') {
     });
     return payload;
   } catch (error) {
-    console.log('Failed to verify session');
+    console.log('Failed to verify session', error);
   }
 }

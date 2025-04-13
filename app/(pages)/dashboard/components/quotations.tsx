@@ -1,14 +1,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { getBitcoin } from '@/http/services/bitcoin';
-import { getCurrency } from '@/http/services/currency';
-import { getStocks } from '@/http/services/stocks';
+import { getBitcoin } from '@/http/bitcoin';
+import { getCurrency } from '@/http/currency';
+import { getStocks } from '@/http/stocks';
 import { ShowVariation } from '@/components/ui/show-variations';
 import { AddToListButton } from './add-to-list-button';
 
 export async function Quotations() {
-  const bitcoin = await getBitcoin();
-  const currencies = await getCurrency();
-  const stocks = await getStocks();
+  const [bitcoin, currencies, stocks] = await Promise.all([
+    getBitcoin().catch(() => []),
+    getCurrency().catch(() => []),
+    getStocks().catch(() => []),
+  ]);
 
   return (
     <section className='grid lg:grid-cols-3 gap-4 px-4 md:px-0'>

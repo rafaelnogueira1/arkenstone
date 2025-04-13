@@ -14,7 +14,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { updateProfileSchema } from '@/shared/schema/update-profile';
 import { z } from 'zod';
-import { updateUser, User } from '@/http/user';
+import { updateUser } from '@/http/user';
 import { useAuth } from '@/providers/auth';
 import { FeedbackMessage } from '@/components/ui/feedback-message';
 import { useEffect, useState } from 'react';
@@ -53,7 +53,7 @@ export function ProfileForm() {
       name: user?.name,
       email: user?.email,
     });
-  }, [user]);
+  }, [user, form]);
 
   return (
     <div className={'flex flex-col gap-6'}>

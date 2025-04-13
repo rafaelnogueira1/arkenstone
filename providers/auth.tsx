@@ -14,14 +14,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    async function gUser() {
+    async function getUser() {
       const token = await getUserToken();
       const user = await getUserById(token?.userId as string);
       setUser(user);
     }
 
     if (!user) {
-      gUser();
+      getUser();
     }
   }, []);
 

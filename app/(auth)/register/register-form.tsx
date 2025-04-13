@@ -22,6 +22,7 @@ import {
 } from '@/components/ui/form';
 import { z } from 'zod';
 import { registerUser } from '@/http/user';
+import Link from 'next/link';
 
 export function RegisterForm() {
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -114,9 +115,9 @@ export function RegisterForm() {
                 </div>
                 <div className='text-center text-sm'>
                   Já tem uma conta?{' '}
-                  <a href='/' className='underline underline-offset-4'>
+                  <Link href='/' className='underline underline-offset-4'>
                     Faça login
-                  </a>
+                  </Link>
                 </div>
               </div>
             </form>

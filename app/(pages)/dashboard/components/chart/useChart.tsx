@@ -1,9 +1,5 @@
 import { useAuth } from '@/providers/auth';
-import {
-  QuotationWithChartData,
-  useManageQuotations,
-} from '@/providers/manage-quotations-provider';
-import { Quotation } from '@/repository/bookmark';
+import { useManageQuotations } from '@/providers/manage-quotations-provider';
 import { useEffect, useState } from 'react';
 
 type useChartReturn = {
@@ -20,7 +16,7 @@ function useChart(): useChartReturn {
     setOpenCotationChart(cotationChart ? JSON.parse(cotationChart) : null);
 
     setIsLoading(false);
-  }, [user?.id]);
+  }, [user?.id, setOpenCotationChart]);
 
   return { isLoading };
 }

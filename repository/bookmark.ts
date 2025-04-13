@@ -2,57 +2,51 @@ export type Quotation = {
   name: string;
   variation: number;
   points?: number;
-  buy?: number;
-  sell?: number;
+  buy?: string;
+  sell?: string;
 };
 
-export const findById = (id: string): Quotation[] | null => {
-  const bookmarks = localStorage.getItem(id);
-  if (!bookmarks) return null;
+export const repositoryBookmarks = {
+  findById: (id: string): Quotation[] | null => {
+    const bookmarks = localStorage.getItem(id);
+    if (!bookmarks) return null;
 
-  const bookmarksArray = JSON.parse(bookmarks);
-  return bookmarksArray;
-};
+    const bookmarksArray = JSON.parse(bookmarks);
+    return bookmarksArray;
+  },
 
-export const create = (id: string) => {
-  const bookmarks = findById(id);
+  create: (id: string) => {
+    const bookmarks = repositoryBookmarks.findById(id);
 
-  if (bookmarks) return null;
+    if (bookmarks) return null;
 
-  localStorage.setItem(id, JSON.stringify([]));
-};
+    localStorage.setItem(id, JSON.stringify([]));
+  },
 
-export const addBookmark = (id: string, quotation: Quotation) => {
-  const bookmarks = findById(id);
+  add: (id: string, quotation: Quotation) => {
+    const bookmarks = repositoryBookmarks.findById(id);
 
-  if (!bookmarks) return null;
+    if (!bookmarks) return null;
 
-  const quotationExists = bookmarks.find(
-    (item) => item.name === quotation.name
-  );
-
-  if (quotationExists) {
-    throw new Error();
-  } else {
     localStorage.setItem(id, JSON.stringify([...bookmarks, quotation]));
-  }
-};
+  },
 
-export const removeBookmark = (id: string, quotation: Quotation) => {
-  const bookmarks = findById(id);
+  remove: (id: string, name: string) => {
+    const bookmarks = repositoryBookmarks.findById(id);
 
-  if (!bookmarks) return null;
+    if (!bookmarks) return null;
 
-  localStorage.setItem(
-    id,
-    JSON.stringify(bookmarks.filter((item) => item.name !== quotation.name))
-  );
-};
+    localStorage.setItem(
+      id,
+      JSON.stringify(bookmarks.filter((item) => item.name !== name))
+    );
+  },
 
-export const getBookmarks = (id: string) => {
-  const bookmarks = findById(id);
+  // findByName: (name: string) => {
+  //   const bookmarks = repositoryBookmarks.findById(id);
 
-  if (!bookmarks) return null;
+  //   if (!bookmarks) return null;
 
-  return bookmarks;
+  //   return bookmarks;
+  // },
 };

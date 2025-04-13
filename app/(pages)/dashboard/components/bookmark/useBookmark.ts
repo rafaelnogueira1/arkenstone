@@ -1,9 +1,8 @@
-import { getBookmarks, removeBookmark } from '@/repository/bookmark';
-
 import { useAuth } from '@/providers/auth';
 import { Quotation } from '@/repository/bookmark';
 import { useEffect, useState } from 'react';
 import { useManageQuotations } from '@/providers/manage-quotations-provider';
+import { removeBookmark, getBookmarks } from '@/http/bookmark';
 
 type useBookmarkReturn = {
   myCotationsList: Quotation[];
@@ -19,7 +18,7 @@ export function useBookmark(): useBookmarkReturn {
   const removeCotationsFromBookmarks = (quotation: Quotation) => {
     if (!user?.id) return;
 
-    removeBookmark(user.id, quotation);
+    removeBookmark({ id: user.id, name: quotation.name });
 
     setMyCotationsList(
       myCotationsList.filter((item) => item.name !== quotation.name)
@@ -36,7 +35,7 @@ export function useBookmark(): useBookmarkReturn {
 
     setMyCotationsList(bookmarks || []);
     setIsLoading(false);
-  }, [user?.id]);
+  }, [user?.id, setMyCotationsList]);
 
   return {
     myCotationsList,

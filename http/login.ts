@@ -1,5 +1,5 @@
 import { login } from '@/app/(auth)/(login)/actions';
-import { findByEmail } from '@/repository/user';
+import { repositoryUsers } from '@/repository/user';
 
 type User = {
   email: string;
@@ -8,7 +8,7 @@ type User = {
 
 export const loginUser = (values: User) => {
   try {
-    const user = findByEmail(values.email);
+    const user = repositoryUsers.findByEmail(values.email);
 
     if (!user) {
       throw new Error('Usuário não encontrado');
