@@ -17,10 +17,19 @@ export type Quotation = {
   sell?: number;
 };
 
+export type QuotationWithChartData = Quotation & {
+  data: {
+    month: string;
+    value: number;
+  }[];
+};
+
 type ManageQuotationsContextType = {
   myCotationsList: Quotation[];
   addMyCotationsList: (quotation: Quotation) => void;
   removeMyCotationsList: (quotation: Quotation) => void;
+  openCotationChart: QuotationWithChartData | null;
+  handleShowDataOnChart: (quotation: Quotation) => void;
 };
 
 const ManageQuotationsContext = createContext<ManageQuotationsContextType>(
@@ -31,6 +40,8 @@ const ManageQuotationsProvider = ({ children }: { children: ReactNode }) => {
   const [myCotationsList, setMyCotationsList] = useState<Quotation[]>([]);
   const [isOpenAlertItemAlreadyExists, setIsOpenAlertItemAlreadyExists] =
     useState(false);
+  const [openCotationChart, setOpenCotationChart] =
+    useState<QuotationWithChartData | null>(null);
 
   const addMyCotationsList = (quotation: Quotation) => {
     const quotationExists = myCotationsList.find(
@@ -50,9 +61,38 @@ const ManageQuotationsProvider = ({ children }: { children: ReactNode }) => {
     );
   };
 
+  const handleShowDataOnChart = (quotation: Quotation) => {
+    const data = [
+      {
+        month: '08/04',
+        value: 105588.09,
+      },
+      {
+        month: '09/04',
+        value: 125590.77,
+      },
+      {
+        month: '10/04',
+        value: 125590.77,
+      },
+      {
+        month: '11/04',
+        value: 95590.77,
+      },
+    ];
+
+    setOpenCotationChart(Object.assign(quotation, { data }));
+  };
+
   return (
     <ManageQuotationsContext.Provider
-      value={{ myCotationsList, addMyCotationsList, removeMyCotationsList }}
+      value={{
+        myCotationsList,
+        addMyCotationsList,
+        removeMyCotationsList,
+        openCotationChart,
+        handleShowDataOnChart,
+      }}
     >
       {isOpenAlertItemAlreadyExists && (
         <AlertDialog

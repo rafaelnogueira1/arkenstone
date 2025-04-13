@@ -12,6 +12,7 @@ import { Separator } from '@/components/ui/separator';
 import { Quotations } from './components/quotations';
 import { getCurrency } from '@/services/currency';
 import { BookMark } from './components/bookmark/bookmark';
+import { Chart } from './components/chart/chart';
 export default async function Home() {
   const currencies = await getCurrency();
 
@@ -29,25 +30,7 @@ export default async function Home() {
 
       <section className='grid lg:grid-cols-[1fr_2fr] gap-4 px-4 md:px-0'>
         <BookMark />
-
-        <Card className='bg-gray-100 flex h-full w-full'>
-          <CardHeader className='flex justify-between items-center'>
-            <div>
-              <CardTitle className='text-xl'>IBOVESPA</CardTitle>
-              <CardDescription>BM&F BOVESPA</CardDescription>
-            </div>
-            <div className='text-right space-y-1'>
-              <p className='font-bold text-gray-800'>1.0832</p>
-              <Badge className='text-red-700 bg-red-200'>
-                <MoveDownLeft className='size-4 text-red-700' />
-                -1.78
-              </Badge>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <p>Gráfico</p>
-          </CardContent>
-        </Card>
+        <Chart />
       </section>
 
       <Quotations />

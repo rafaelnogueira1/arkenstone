@@ -18,7 +18,8 @@ import { useManageQuotations } from '@/providers/manage-quotations-provider';
 import { Fragment, useState } from 'react';
 
 export function BookMarkList() {
-  const { myCotationsList, removeMyCotationsList } = useManageQuotations();
+  const { myCotationsList, removeMyCotationsList, handleShowDataOnChart } =
+    useManageQuotations();
   const [isOpenAlertConfirmation, setIsOpenAlertConfirmation] = useState(false);
 
   return (
@@ -59,7 +60,7 @@ export function BookMarkList() {
 
               <div className='flex flex-col gap-3 items-end'>
                 <button
-                  onClick={() => null}
+                  onClick={() => handleShowDataOnChart(quotation)}
                   className='text-xs text-slate-900 bg-slate-50 font-semibold uppercase p-2 px-4 rounded-sm cursor-pointer'
                 >
                   Ver gráfico
