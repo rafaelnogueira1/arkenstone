@@ -24,9 +24,11 @@ import { z } from 'zod';
 import { registerUser } from '@/http/user';
 import Link from 'next/link';
 import { FeedbackMessage } from '@/components/ui/feedback-message';
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
+import { Loader2 } from 'lucide-react';
 
 export function RegisterForm() {
+  const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof registerSchema>>({
     defaultValues: {
       name: '',
@@ -41,15 +43,17 @@ export function RegisterForm() {
   } | null>(null);
 
   const handleSubmit = (values: z.infer<typeof registerSchema>) => {
-    const response = registerUser(values);
+    startTransition(() => {
+      const response = registerUser(values);
 
-    if (response?.success) {
-      redirect('/');
-    }
+      if (response?.success) {
+        redirect('/');
+      }
 
-    setFeedback({
-      message: response?.message,
-      type: 'error',
+      setFeedback({
+        message: response?.message,
+        type: 'error',
+      });
     });
   };
 
@@ -122,7 +126,9 @@ export function RegisterForm() {
                       )}
                     />
                   </div>
-                  <ButtonSaveData>Criar conta</ButtonSaveData>
+                  <ButtonSaveData isPending={isPending}>
+                    Criar conta
+                  </ButtonSaveData>
                 </div>
                 <div className='text-center text-sm'>
                   Já tem uma conta?{' '}

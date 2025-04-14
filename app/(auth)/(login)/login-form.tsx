@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { ButtonSaveData } from '@/components/ui/button-save-data';
@@ -19,10 +19,11 @@ import { z } from 'zod';
 import { FeedbackMessage } from '@/components/ui/feedback-message';
 import { loginUser } from '@/http/login';
 import { useAuth } from '@/providers/auth';
+
 export function LoginForm() {
   const [loginMessageError, setLoginMessageError] = useState('');
   const { setUser } = useAuth();
-
+  const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof loginSchema>>({
     defaultValues: {
       email: '',
@@ -32,13 +33,15 @@ export function LoginForm() {
   });
 
   const handleSubmit = (values: z.infer<typeof loginSchema>) => {
-    const response = loginUser(values);
+    startTransition(() => {
+      const response = loginUser(values);
 
-    if (response?.message) {
-      setLoginMessageError(response.message);
-    }
+      if (response?.message) {
+        setLoginMessageError(response.message);
+      }
 
-    setUser(response?.user);
+      setUser(response?.user);
+    });
   };
 
   return (
@@ -90,7 +93,7 @@ export function LoginForm() {
                       )}
                     />
                   </div>
-                  <ButtonSaveData>Login</ButtonSaveData>
+                  <ButtonSaveData isPending={isPending}>Login</ButtonSaveData>
                 </div>
                 {loginMessageError && (
                   <FeedbackMessage type='error'>
