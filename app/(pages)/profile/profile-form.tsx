@@ -17,7 +17,7 @@ import { z } from 'zod';
 import { updateUser } from '@/http/user';
 import { useAuth } from '@/providers/auth';
 import { FeedbackMessage } from '@/components/ui/feedback-message';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 
 export function ProfileForm() {
   const { user, setUser } = useAuth();
@@ -33,19 +33,22 @@ export function ProfileForm() {
     success: boolean;
     message: string;
   } | null>(null);
+  const [isPending, startTransition] = useTransition();
 
   const handleSubmit = (values: z.infer<typeof updateProfileSchema>) => {
     if (!user) return;
-    const userUpdated = {
-      ...user,
-      name: values.name,
-      email: values.email,
-    };
+    startTransition(() => {
+      const userUpdated = {
+        ...user,
+        name: values.name,
+        email: values.email,
+      };
 
-    const response = updateUser(userUpdated);
+      const response = updateUser(userUpdated);
 
-    setFeedbackMessage(response);
-    setUser(userUpdated);
+      setFeedbackMessage(response);
+      setUser(userUpdated);
+    });
   };
 
   useEffect(() => {
@@ -95,7 +98,7 @@ export function ProfileForm() {
                   )}
                 />
               </div>
-              <ButtonSaveData>Atualizar</ButtonSaveData>
+              <ButtonSaveData isPending={isPending}>Atualizar</ButtonSaveData>
 
               {feedbackMessage && (
                 <FeedbackMessage

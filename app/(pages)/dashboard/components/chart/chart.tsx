@@ -11,15 +11,7 @@ import {
   ChartLegendContent,
 } from '@/components/ui/chart';
 
-import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  Legend,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-} from 'recharts';
+import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
 import { ShowVariation } from '@/components/ui/show-variations';
 import useChart from './useChart';
 import { Loader2 } from 'lucide-react';

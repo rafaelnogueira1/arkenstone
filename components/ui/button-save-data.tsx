@@ -6,7 +6,7 @@ export function ButtonSaveData({
   children,
   isPending,
   ...props
-}: React.ComponentPropsWithoutRef<'button'> & { isPending: boolean }) {
+}: React.ComponentPropsWithoutRef<'button'> & { isPending?: boolean }) {
   return (
     <Button
       type='submit'
