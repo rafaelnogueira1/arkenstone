@@ -1,10 +1,5 @@
 import { Header } from '@/components/ui/header';
 import { HeaderMobile } from '@/components/ui/header-mobile';
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Arkstone',
-};
 
 export default function PageLayout({
   children,

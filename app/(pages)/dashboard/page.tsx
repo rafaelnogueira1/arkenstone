@@ -5,6 +5,11 @@ import { Quotations } from './components/quotations';
 import { getCurrency } from '@/http/currency';
 import { BookMark } from './components/bookmark/bookmark';
 import { Chart } from './components/chart/chart';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Dashboard - Arkstone',
+};
 
 export default async function Home() {
   const currencies = await getCurrency();
@@ -21,7 +26,7 @@ export default async function Home() {
         <Separator className='mt-2' />
       </header>
 
-      <section className='grid lg:grid-cols-[1fr_2fr] gap-4 px-4 md:px-0'>
+      <section className='grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-4 px-4 md:px-0'>
         <BookMark />
         <Chart />
       </section>

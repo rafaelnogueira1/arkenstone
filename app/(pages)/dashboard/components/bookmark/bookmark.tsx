@@ -10,7 +10,7 @@ export function BookMark() {
             Minha Lista
           </CardTitle>
         </CardHeader>
-        <CardContent className='flex flex-col gap-3 h-[400px] overflow-y-auto'>
+        <CardContent className='flex flex-col gap-3 max-h-[400px] overflow-y-auto'>
           <BookMarkList />
         </CardContent>
       </Card>

@@ -1,6 +1,11 @@
 import { Spade } from 'lucide-react';
 
 import { RegisterForm } from './register-form';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Criar conta - Arkstone',
+};
 
 export default function RegisterPage() {
   return (

@@ -15,8 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Dashboard - Arkstone',
-  description: 'Dashboard for Arkstone',
+  title: 'Arkstone',
 };
 
 export default function RootLayout({

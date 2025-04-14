@@ -11,7 +11,15 @@ import {
   ChartLegendContent,
 } from '@/components/ui/chart';
 
-import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Legend,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+} from 'recharts';
 import { ShowVariation } from '@/components/ui/show-variations';
 import useChart from './useChart';
 import { Loader2 } from 'lucide-react';
@@ -30,7 +38,7 @@ export function Chart() {
   const { isLoading, removeCotationFromChart } = useChart();
 
   return (
-    <Card className='bg-slate-50 flex h-[508px] w-full'>
+    <Card className='bg-slate-50 flex max-h-[508px]'>
       {isLoading && (
         <div className='w-full h-full flex justify-center items-center'>
           <Loader2 className='h-10 w-10 animate-spin text-slate-400' />
@@ -63,24 +71,26 @@ export function Chart() {
               </Badge>
             </div>
           </CardHeader>
-          <CardContent className='min-h-[400px] max-w-[400px] md:max-w-full'>
-            <ChartContainer
-              config={chartConfig}
-              className='min-h-[200px] max-h-full max-w-[400px] md:max-w-full'
-            >
-              <BarChart accessibilityLayer data={openCotationChart.data}>
-                <CartesianGrid vertical={false} />
-                <XAxis
-                  dataKey='month'
-                  tickLine={false}
-                  tickMargin={10}
-                  axisLine={false}
-                />
-                <ChartTooltip content={<ChartTooltipContent />} />
-                <ChartLegend content={<ChartLegendContent />} />
-                <Bar dataKey='value' fill='var(--color-value)' radius={4} />
-              </BarChart>
-            </ChartContainer>
+          <CardContent className='max-h-[400px]'>
+            <div className='w-full overflow-x-auto'>
+              <ChartContainer
+                config={chartConfig}
+                className='min-h-[200px] max-h-[380px] w-full'
+              >
+                <BarChart accessibilityLayer data={openCotationChart.data}>
+                  <CartesianGrid vertical={false} />
+                  <XAxis
+                    dataKey='month'
+                    tickLine={false}
+                    tickMargin={10}
+                    axisLine={false}
+                  />
+                  <ChartTooltip content={<ChartTooltipContent />} />
+                  <ChartLegend content={<ChartLegendContent />} />
+                  <Bar dataKey='value' fill='var(--color-value)' radius={4} />
+                </BarChart>
+              </ChartContainer>
+            </div>
             <Button onClick={removeCotationFromChart} variant='ghost'>
               Remover
             </Button>
