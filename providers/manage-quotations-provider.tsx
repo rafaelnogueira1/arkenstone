@@ -15,6 +15,7 @@ import {
   getCotationOnBookmark,
 } from '@/http/bookmark';
 import { generateChartData } from '@/shared/utils/generate-char-data';
+import { toast } from 'sonner';
 
 export type QuotationWithChartData = Quotation & {
   data: {
@@ -59,6 +60,7 @@ const ManageQuotationsProvider = ({ children }: { children: ReactNode }) => {
 
     addNewCotationToBookmark({ id: user?.id, quotation });
     setMyCotationsList([...myCotationsList, quotation]);
+    toast.success('Salvo com sucesso!');
   };
 
   const showQuotationOnChart = (quotation: Quotation) => {
