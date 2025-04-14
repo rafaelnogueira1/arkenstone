@@ -25,7 +25,6 @@ import { registerUser } from '@/http/user';
 import Link from 'next/link';
 import { FeedbackMessage } from '@/components/ui/feedback-message';
 import { useState, useTransition } from 'react';
-import { Loader2 } from 'lucide-react';
 
 export function RegisterForm() {
   const [isPending, startTransition] = useTransition();
