@@ -10,8 +10,8 @@ export const loginUser = (values: User) => {
   try {
     const user = repositoryUsers.findByEmail(values.email);
 
-    if (!user) {
-      throw new Error('Usuário não encontrado');
+    if (!user || user.password !== values.password) {
+      throw new Error('Dados inválidos');
     }
 
     login(user.id);

@@ -21,7 +21,7 @@ import { Button } from '@/components/ui/button';
 const chartConfig = {
   value: {
     label: 'Valor',
-    color: '#34d399',
+    color: '#0c4a6e',
   },
 } satisfies ChartConfig;
 

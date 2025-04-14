@@ -14,6 +14,7 @@ import {
   addNewCotationToBookmark,
   getCotationOnBookmark,
 } from '@/http/bookmark';
+import { generateChartData } from '@/shared/utils/generate-char-data';
 
 export type QuotationWithChartData = Quotation & {
   data: {
@@ -61,31 +62,15 @@ const ManageQuotationsProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const showQuotationOnChart = (quotation: Quotation) => {
-    const data = [
-      {
-        month: '08/04',
-        value: 105588.09,
-      },
-      {
-        month: '09/04',
-        value: 125590.77,
-      },
-      {
-        month: '10/04',
-        value: 125590.77,
-      },
-      {
-        month: '11/04',
-        value: 95590.77,
-      },
-    ];
+    const chartData = generateChartData(quotation.variation);
+    const quotationWithChart = { ...quotation, data: chartData };
 
     localStorage.setItem(
       `cotationChart-${user?.id}`,
-      JSON.stringify(Object.assign(quotation, { data }))
+      JSON.stringify(Object.assign(quotationWithChart))
     );
 
-    setOpenCotationChart(Object.assign(quotation, { data }));
+    setOpenCotationChart(Object.assign(quotationWithChart));
   };
 
   return (
