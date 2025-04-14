@@ -1,5 +1,5 @@
 import { Separator } from '@/components/ui/separator';
-import { UserCheck } from 'lucide-react';
+import { Settings } from 'lucide-react';
 import { Metadata } from 'next';
 import { ButtonClearData } from './button-clear-data';
 
@@ -13,7 +13,7 @@ export default async function ProfilePage() {
     <div className='grid gap-8 mt-10'>
       <header>
         <h2 className='text-4xl font-bold text-primary flex items-center gap-2'>
-          <UserCheck className='size-6 text-slate-700' />
+          <Settings className='size-6 text-slate-700' />
           Configuração
         </h2>
         <Separator className='mt-2' />
