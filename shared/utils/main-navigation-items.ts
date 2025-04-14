@@ -7,4 +7,8 @@ export const navigation_items = [
     label: 'Meus Dados',
     href: '/profile',
   },
+  {
+    label: 'Configuração',
+    href: '/settings',
+  },
 ];

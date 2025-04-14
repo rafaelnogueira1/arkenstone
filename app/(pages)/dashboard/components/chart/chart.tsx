@@ -63,10 +63,10 @@ export function Chart() {
               </Badge>
             </div>
           </CardHeader>
-          <CardContent className='h-[400px]'>
+          <CardContent className='min-h-[400px] max-w-[400px] md:max-w-full'>
             <ChartContainer
               config={chartConfig}
-              className='min-h-[200px] max-h-full w-full'
+              className='min-h-[200px] max-h-full max-w-[400px] md:max-w-full'
             >
               <BarChart accessibilityLayer data={openCotationChart.data}>
                 <CartesianGrid vertical={false} />
